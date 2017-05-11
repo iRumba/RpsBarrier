@@ -22,6 +22,11 @@ namespace RpsBarrier
             }
         }
 
+        public void Reset()
+        {
+            _rpsRequestsTimeStamps.Clear();
+        }
+
         public bool CanExecute()
         {
             // Чистим список таймстампов операций

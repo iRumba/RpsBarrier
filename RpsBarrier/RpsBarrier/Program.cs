@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 
 namespace RpsBarrier
@@ -9,10 +10,12 @@ namespace RpsBarrier
         {
             Console.BufferHeight = 10000;
 
+            var forInit = RpsBarrier.Instance;
             RunTest("#1", 5, 50, 10, 300);
             RunTest("#2", 50, 1000, 10, 30);
+            RunTest("#3", 2000, 20000, 0, 1);
 
-            Console.CursorTop += 1;
+            Console.WriteLine();
             Console.WriteLine("All tests completed. Press any key to exit...");
             Console.ReadKey();
         }
@@ -34,18 +37,23 @@ namespace RpsBarrier
             Console.WriteLine(new string(' ', 79));
             Console.CursorTop -= 1;
 
+            RpsBarrier.Instance.Reset();
             RpsBarrier.Instance.MaxOperationsPerSecond = rps;
             var rnd = new Random(DateTime.UtcNow.Millisecond);
+            var sw = new Stopwatch();
 
             for (var i = 0; i < iterationsCount; i++)
             {
+                sw.Start();
                 var res = RpsBarrier.Instance.CanExecute();
+                sw.Stop();
                 var dt = DateTime.UtcNow;
-                Console.WriteLine($"{i,5}. {dt.ToString("T"),8} {dt.Millisecond,3} - {res}");
+                Console.WriteLine($"{i + 1, 6}. {dt.ToString("T"),8}.{dt.Millisecond, -3} - {res, -5} | Elapsed {sw.ElapsedTicks} ticks");
+                sw.Reset();
                 if (minRnd <= maxRnd && maxRnd > 0)
-                    Thread.Sleep(rnd.Next(minRnd, maxRnd));
+                    Thread.Sleep(rnd.Next(minRnd, maxRnd + 1));
             }
-
+            
             Console.WriteLine("Test completed. Press any key to continue...");
             Console.ReadKey();
         }
