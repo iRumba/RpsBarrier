@@ -7,11 +7,11 @@ namespace RpsBarrier
     {
         public int MaxOperationsPerSecond { get; set; } = 500;
         static RpsBarrier _instance;
-        HashSet<DateTime> _rpsRequestsTimeStamps;
+        List<DateTime> _rpsRequestsTimeStamps;
 
         RpsBarrier()
         {
-            _rpsRequestsTimeStamps = new HashSet<DateTime>();
+            _rpsRequestsTimeStamps = new List<DateTime>();
         }
 
         public static RpsBarrier Instance
@@ -39,7 +39,12 @@ namespace RpsBarrier
         {
             // Удаляем из хешсета те отпечатки времени, которые меньше текущего на 1 секунду
             // чтобы избежать переполнения
-            _rpsRequestsTimeStamps.RemoveWhere(dt => dt.AddSeconds(1) < DateTime.UtcNow);
+            if (_rpsRequestsTimeStamps.Count > 0)
+            {
+                var first = _rpsRequestsTimeStamps[0];
+                if (first.AddSeconds(1) < DateTime.UtcNow)
+                    _rpsRequestsTimeStamps.RemoveAt(0);
+            }
         }
     }
 
