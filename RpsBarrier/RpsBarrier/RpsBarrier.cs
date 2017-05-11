@@ -5,13 +5,29 @@ namespace RpsBarrier
 {
     public class RpsBarrier
     {
-        public int MaxOperationsPerSecond { get; set; } = 500;
+        int _maxOperationsPerSecond;
+        public int MaxOperationsPerSecond
+        {
+            get
+            {
+                return _maxOperationsPerSecond;
+            }
+            set
+            {
+                if (_maxOperationsPerSecond != value)
+                {
+                    _maxOperationsPerSecond = value;
+                    _rpsRequestsTimeStamps.Clear();
+                }
+            }
+        }
         static RpsBarrier _instance;
-        List<DateTime> _rpsRequestsTimeStamps;
+        LinkedList<DateTime> _rpsRequestsTimeStamps;
 
         RpsBarrier()
         {
-            _rpsRequestsTimeStamps = new List<DateTime>();
+            _rpsRequestsTimeStamps = new LinkedList<DateTime>();
+            MaxOperationsPerSecond = 500;
         }
 
         public static RpsBarrier Instance
@@ -36,20 +52,15 @@ namespace RpsBarrier
             // то разрешаем выполнение и добавляем текущий отпечаток времени в хэшсет
             var res = _rpsRequestsTimeStamps.Count < MaxOperationsPerSecond;
             if (res)
-                _rpsRequestsTimeStamps.Add(DateTime.UtcNow);
+                _rpsRequestsTimeStamps.AddLast(DateTime.UtcNow);
             return res;
         }
 
         void ResetTimeStamps()
         {
-            // Удаляем из хешсета те отпечатки времени, которые меньше текущего на 1 секунду
-            // чтобы избежать переполнения
-            if (_rpsRequestsTimeStamps.Count > 0)
-            {
-                var first = _rpsRequestsTimeStamps[0];
-                if (first.AddSeconds(1) < DateTime.UtcNow)
-                    _rpsRequestsTimeStamps.RemoveAt(0);
-            }
+            var first = _rpsRequestsTimeStamps.First;
+            if (first != null && first.Value.AddSeconds(1) < DateTime.UtcNow)
+                _rpsRequestsTimeStamps.RemoveFirst();
         }
     }
 

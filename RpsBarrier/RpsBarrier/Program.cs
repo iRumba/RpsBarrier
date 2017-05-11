@@ -13,7 +13,7 @@ namespace RpsBarrier
             var forInit = RpsBarrier.Instance;
             RunTest("#1", 5, 50, 10, 300);
             RunTest("#2", 50, 1000, 10, 30);
-            RunTest("#3", 2000, 20000, 0, 1);
+            RunTest("#3", 2000, 20000, 0, 0);
 
             Console.WriteLine();
             Console.WriteLine("All tests completed. Press any key to exit...");
@@ -37,7 +37,7 @@ namespace RpsBarrier
             Console.WriteLine(new string(' ', 79));
             Console.CursorTop -= 1;
 
-            RpsBarrier.Instance.Reset();
+            //RpsBarrier.Instance.Reset();
             RpsBarrier.Instance.MaxOperationsPerSecond = rps;
             var rnd = new Random(DateTime.UtcNow.Millisecond);
             var sw = new Stopwatch();
