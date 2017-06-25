@@ -11,16 +11,20 @@ namespace RpsBarrier
     {
         object _lockObject = new object();
         int _tasksPerSecond;
-        Stopwatch _sw;
+        static Stopwatch _sw;
 
         RpsPoolItem _currentItem;
+
+        static RpsPool()
+        {
+            _sw = new Stopwatch();
+            _sw.Start();
+        }
 
         public RpsPool(int tasksPerSecond)
         {
             if (tasksPerSecond < 1)
                 throw new InvalidOperationException();
-            _sw = new Stopwatch();
-            _sw.Start();
             _tasksPerSecond = tasksPerSecond;
 
             var tmpItem = new RpsPoolItem();
