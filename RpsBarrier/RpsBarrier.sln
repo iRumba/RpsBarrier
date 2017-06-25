@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RpsBarrier", "RpsBarrier\RpsBarrier.csproj", "{6BC124FF-3D3A-4362-816C-2DA99D819A32}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{7BDB12E3-D5BE-462A-A1DD-2335C8A8A3C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{6BC124FF-3D3A-4362-816C-2DA99D819A32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BC124FF-3D3A-4362-816C-2DA99D819A32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BC124FF-3D3A-4362-816C-2DA99D819A32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BDB12E3-D5BE-462A-A1DD-2335C8A8A3C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BDB12E3-D5BE-462A-A1DD-2335C8A8A3C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BDB12E3-D5BE-462A-A1DD-2335C8A8A3C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BDB12E3-D5BE-462A-A1DD-2335C8A8A3C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
