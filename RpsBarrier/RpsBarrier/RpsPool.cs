@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace RpsBarrier
     {
         object _lockObject = new object();
         int _tasksPerSecond;
+        Stopwatch _sw;
 
         RpsPoolItem _currentItem;
 
@@ -17,7 +19,8 @@ namespace RpsBarrier
         {
             if (tasksPerSecond < 1)
                 throw new InvalidOperationException();
-
+            _sw = new Stopwatch();
+            _sw.Start();
             _tasksPerSecond = tasksPerSecond;
 
             var tmpItem = new RpsPoolItem();
@@ -42,12 +45,12 @@ namespace RpsBarrier
         {
             lock (_lockObject)
             {
-                var tmpDate = DateTime.UtcNow;
-                var res = _currentItem.Next.StartingDate.AddSeconds(1) < tmpDate;
+                var tmpStamp = _sw.ElapsedMilliseconds;
+                var res = _currentItem.Next.StartingMilliseconds + 1000 < tmpStamp;
                 if (res)
                 {
                     _currentItem = _currentItem.Next;
-                    _currentItem.StartingDate = tmpDate;
+                    _currentItem.StartingMilliseconds = tmpStamp;
                 }
 
                 return res;
@@ -58,6 +61,6 @@ namespace RpsBarrier
     class RpsPoolItem
     {
         public RpsPoolItem Next { get; set; }
-        public DateTime StartingDate { get; set; }
+        public long StartingMilliseconds { get; set; } = -1000;
     }
 }

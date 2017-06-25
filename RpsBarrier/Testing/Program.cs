@@ -16,8 +16,8 @@ namespace Testing
 
         static void Main(string[] args)
         {
-            RunTest("One Thread", 50, 280 ,5, 15);
-            RunTestMultithread("Multi Thread", 50, 280, 4, 20, 60);
+            //RunTest("One Thread", 50, 280 ,5, 15);
+            RunTestMultithread("Multi Thread", 6, 50, 4, 200, 600);
             Console.WriteLine("All tests were completed. Press any key to exit...");
             Console.ReadKey();
         }
