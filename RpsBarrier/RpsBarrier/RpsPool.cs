@@ -11,15 +11,9 @@ namespace RpsBarrier
     {
         object _lockObject = new object();
         int _tasksPerSecond;
-        static Stopwatch _sw;
+        static Stopwatch _sw = Stopwatch.StartNew();
 
         RpsPoolItem _currentItem;
-
-        static RpsPool()
-        {
-            _sw = new Stopwatch();
-            _sw.Start();
-        }
 
         public RpsPool(int tasksPerSecond)
         {
