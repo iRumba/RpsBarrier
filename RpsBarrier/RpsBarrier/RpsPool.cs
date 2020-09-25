@@ -44,7 +44,7 @@ namespace RpsBarrier
             lock (_lockObject)
             {
                 var tmpStamp = _sw.ElapsedMilliseconds;
-                var res = _currentItem.Next.StartingMilliseconds + 1000 < tmpStamp;
+                var res = _currentItem.Next.StartingMilliseconds + 1000 <= tmpStamp;
                 if (res)
                 {
                     _currentItem = _currentItem.Next;
